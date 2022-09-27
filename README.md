@@ -7,9 +7,9 @@ Open in Unicode environment if it looks broken.
 ---
 
 このプロジェクトは大学研究室内の教育用資料として公開しているものです。  
-学生個人による非公式な資料であり、正確な情報はMathWorks社およびPsychtoolboxの公式サイトおよびフォーラムを参照してください。
+学生個人による非公式な資料であり、正確な情報はMathWorks社およびPsychtoolboxの公式サイトおよびフォーラムを参照してください。また、執筆時点から仕様変更がされている可能性もあるため、迷ったら公式を参照して下さい。
 特に最新情報は公式フォーラムで見られます。
-Gitレポジトリのwikiには公式ドキュメントにまだ記載されていない情報も載っています。  
+Gitレポジトリのwikiには公式ドキュメントにまだ記載されていない情報も載っています。ライセンスについても、詳細はGitレポジトリを参照。  
 - [PTB公式ホームページ](http://psychtoolbox.org/)  
 - [PTB公式フォーラム](https://psychtoolbox.discourse.group/)  
 - [Gitレポジトリ](https://github.com/Psychtoolbox-3/Psychtoolbox-3)  
@@ -21,7 +21,7 @@ Gitレポジトリのwikiには公式ドキュメントにまだ記載されて�
 - demo_ForBeginner.m：はじめてPTBに触れる人はこれを読むこと。コメントで細かく説明を入れていて、初学者が読むだけで基本を網羅できるようにしている。
 - demo_StimTracker.m：Cedrus社のStimTrackerを用いた同期を行うためのデモコード。
 - template_Simple.m：簡単な実験プログラムを新規作成する際のひな形。
-- template_Tobii.m：Tobiiアイトラッカーを用いた実験プログラムを新規作成する際のひな形。
+- template_Tobii.m：[Titta(Niehorster et al., 2020)](https://github.com/dcnieho/Titta)とTobiiアイトラッカーを用いた実験プログラムを新規作成する際のひな形。
 
 ## PTBのインストール
 
@@ -36,7 +36,7 @@ Windows10以降のWindowsは正常に動作しているのか判断すること�
 - ハイブリッドグラフィックスのノートPC
 
 ビギナーに推奨する環境
-- AMD製GPUを搭載したデスクトップPC + Ubuntu + オープンソースGPUドライバー（最初から自動的に入っている）
+- AMD製GPUを搭載したデスクトップPC + Ubuntu + オープンソースGPUドライバー（最初から自動的に入っているドライバー）
 
 まずはじめにPTB公式サイトのダウンロードページを熟読しましょう。  
 [http://psychtoolbox.org/download.html](http://psychtoolbox.org/download.html)
@@ -46,7 +46,7 @@ Windows10以降のWindowsは正常に動作しているのか判断すること�
 Ubuntu等のDebian系LinuxではNeuroDebianを利用すると、インストール時の依存関係や不具合を自動的に解消してくれるので便利。  
 これがないと全て手動で修正する必要がある。
 
-PTB3ダウンロードページからNeuroDebianページにいく。
+PTB3ダウンロードページからNeuroDebianページにいく。今回はMATLABを選択。
 
 ![](img/PTBdownload.png)
 
@@ -118,18 +118,18 @@ MATLABを起動したら**Downloadpsychtoolbox.m**のフォルダーに移動し
 確認できたらMATLABのコマンドウィンドウで`DownloadPsychtoolbox('インストール先のディレクトリ')`を実行する。
 
 ~~~
-# MATLABコマンドウィンドウで
+% MATLABコマンドウィンドウで
 
-#　ダウンロードしたフォルダーに移動（適切なディレクトリを入れる）
+%　ダウンロードしたフォルダーに移動（適切なディレクトリを入れる）
 cd /home/(ユーザー名)/Downloads
 
-#　引数はMATLABのtoolboxフォルダーのパス（適切なディレクトリを入れる）
+%　引数はMATLABのtoolboxフォルダーのパス（適切なディレクトリを入れる）
 DownloadPsychtoolbox('/(適切なパス)/MATLAB/R2022a/toolbox')
 ~~~
 
 インストールが始まったら、出てくる文章を注意深く読みながら、インストーラーの指示に従う。英語が苦手な人は助っ人を用意しておくと良い。
 
-グループに追加するユーザーを入力する時はrootに加えてローカルユーザーの入力を忘れずに。
+グループに追加するユーザーを入力する時はrootに加えて通常のユーザーの入力を忘れずに。
 
 ![](img/add_user.png)
 
@@ -147,11 +147,18 @@ matlab -nojvm
 MATLABのコマンドウィンドウで以下のコマンドを一度だけ実行する。
 
 ~~~
-# MATLABコマンドウィンドウで
+% MATLABコマンドウィンドウで
 PsychLinuxConfiguration
 ~~~
 
 `DownloadPsychtoolbox`の時と同様に表示される文章を読みながら進めていき、グループにユーザーを追加する時だけ忘れなければOK。
+
+最後に追加で以下のインストールが推奨されている。
+
+~~~
+# ターミナルで
+sudo apt-get install linux-lowlatency
+~~~
 
 ### インストールに失敗したら
 
@@ -161,7 +168,7 @@ PsychLinuxConfiguration
 エラーの原因を解決したら、sudo権限でMATLABを起動して、MATLABコマンドウィンドウで以下のようにPTBのディレクトリに移動して`SetupPsychtoolbox`を実行する。
 
 ~~~
-# MATLABコマンドウィンドウで
+% MATLABコマンドウィンドウで
 cd([matlabroot '/toolbox/Psychtoolbox'])
 SetupPsychtoolbox
 ~~~
@@ -173,8 +180,8 @@ SetupPsychtoolbox
 MATLABで以下のコマンドを実行してみて、動作したらインストール成功！
 
 ~~~
-# MATLABコマンドウィンドウで
-# 以下、はじめて動かすと楽しいデモ
+% MATLABコマンドウィンドウで
+% 以下、はじめて動かすと楽しいデモ
 LinesDemo
 DrawFormattedTextDemo
 KbDemo
