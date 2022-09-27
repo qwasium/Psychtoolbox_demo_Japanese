@@ -7,8 +7,14 @@ Open in Unicode environment if it looks broken.
 ---
 
 このプロジェクトは大学研究室内の教育用資料として公開しているものです。  
-学生個人による非公式な資料であり、正確な情報はMathWorks社およびPsychtoolboxの公式サイトおよびフォーラムを参照してください。  
-以降、Psychtoolbox3をPTBと略称する。
+学生個人による非公式な資料であり、正確な情報はMathWorks社およびPsychtoolboxの公式サイトおよびフォーラムを参照してください。
+特に最新情報は公式フォーラムで見られます。
+Gitレポジトリのwikiには公式ドキュメントにまだ記載されていない情報も載っています。  
+- [PTB公式ホームページ](http://psychtoolbox.org/)  
+- [PTB公式フォーラム](https://psychtoolbox.discourse.group/)  
+- [Gitレポジトリ](https://github.com/Psychtoolbox-3/Psychtoolbox-3)  
+
+※以降、PsychtoolboxをPTBと略称する。
 
 ## コンテンツ
 
@@ -30,15 +36,15 @@ Windows10以降のWindowsは正常に動作しているのか判断すること�
 - ハイブリッドグラフィックスのノートPC
 
 ビギナーに推奨する環境
-- AMD製GPUを搭載したデスクトップPC + Ubuntu
+- AMD製GPUを搭載したデスクトップPC + Ubuntu + オープンソースGPUドライバー（最初から自動的に入っている）
 
-まずはじめにPTB公式サイトのダウンロードページを熟読すべきである。  
+まずはじめにPTB公式サイトのダウンロードページを熟読しましょう。  
 [http://psychtoolbox.org/download.html](http://psychtoolbox.org/download.html)
 
 ### NeuroDebianレポジトリの追加
 
-Ubuntu等のDebian系LinuxではNeuroDebianを利用すると、インストール時に依存関係や不具合を自動的に解消してくれるので便利。  
-これがないと全て手動でインストール・修正する必要がある。
+Ubuntu等のDebian系LinuxではNeuroDebianを利用すると、インストール時の依存関係や不具合を自動的に解消してくれるので便利。  
+これがないと全て手動で修正する必要がある。
 
 PTB3ダウンロードページからNeuroDebianページにいく。
 
@@ -52,7 +58,7 @@ PTB3ダウンロードページからNeuroDebianページにいく。
 
 ![](img/ndeb_install.png)
 
-選択したら下にコマンドが出てくるのでターミナルを開いて実行する。
+選択するとその下にコマンドが出てくるのでターミナルを開いて実行する。
 
 ![](img/add_repo.png)
 
@@ -60,10 +66,12 @@ PTB3ダウンロードページからNeuroDebianページにいく。
 **重要：選択肢はすべて*YES*を選択すること。**
 
 ~~~
+# ターミナルで
+sudo apt update
 sudo apt install matlab-psychtoolbox-3
 ~~~
 
-PTBをインストールするMATLABのディレクトリを指定（画像はデフォルトとインストール先が違うので注意）。
+PTBをインストールするMATLABのディレクトリを指定する（画像で入力されているディレクトリはMATLABデフォルトのインストール先が違うので注意）。
 
 ![](img/matroot.png)
 
@@ -77,8 +85,9 @@ PTBをインストールするMATLABのディレクトリを指定（画像は�
 
 これでNeuroDebianは完了。
 
-MATLABをインストールする前にPTBをインストールした場合はMATLABインストール後にターミナルで以下を実行すること。  
+MATLABをインストールする前に以上のインストールをした場合はMATLABインストール後にターミナルで以下を実行すること。  
 ~~~
+# ターミナルで
 sudo dpkg-reconfigure matlab-support
 ~~~
 
@@ -86,9 +95,10 @@ sudo dpkg-reconfigure matlab-support
 
 次に、Psychtoolbox公式ダウンロードページから[**Downloadpsychtoolbox.m**](https://raw.github.com/Psychtoolbox-3/Psychtoolbox-3/master/Psychtoolbox/DownloadPsychtoolbox.m.zip)をダウンロードして解凍する。
 
-MATLABをrootで起動する。(シンボリックリンクがある場合は以下で起動可)
+MATLABをrootで起動する。(シンボリックリンクがある場合はターミナルから以下のコマンドで起動可)
 
 ~~~
+# ターミナルで
 sudo matlab
 ~~~
 
@@ -96,9 +106,9 @@ sudo matlab
 ](https://jp.mathworks.com/matlabcentral/answers/1619660-matlab-2021b-crashed-when-running-with-sudo-root
 )
 
-MATLABクラッシュレポーターを触らなければPTBのインストールは可能である。
+MATLABクラッシュレポーターのウィンドウを触らなければ、MATLABコマンドウィンドウからPTBのインストールは可能である。
 
-![](/img/crash.png)
+![](img/crash.png)
 
 MATLABを起動したら**Downloadpsychtoolbox.m**のフォルダーに移動して以下を確認する。
 - GPUの正しい端子にディスプレイを接続する
@@ -108,10 +118,12 @@ MATLABを起動したら**Downloadpsychtoolbox.m**のフォルダーに移動し
 確認できたらMATLABのコマンドウィンドウで`DownloadPsychtoolbox('インストール先のディレクトリ')`を実行する。
 
 ~~~
+# MATLABコマンドウィンドウで
+
 #　ダウンロードしたフォルダーに移動（適切なディレクトリを入れる）
 cd /home/(ユーザー名)/Downloads
 
-#　MATLABのtoolboxフォルダーのパス（適切なディレクトリを入れる）
+#　引数はMATLABのtoolboxフォルダーのパス（適切なディレクトリを入れる）
 DownloadPsychtoolbox('/(適切なパス)/MATLAB/R2022a/toolbox')
 ~~~
 
@@ -119,7 +131,7 @@ DownloadPsychtoolbox('/(適切なパス)/MATLAB/R2022a/toolbox')
 
 グループに追加するユーザーを入力する時はrootに加えてローカルユーザーの入力を忘れずに。
 
-![](/img/add_user.png)
+![](img/add_user.png)
 
 無事にインストールが終了したら、MATLABを終了する。PTB公式ページの以下を読んだうえで、
 
@@ -128,12 +140,14 @@ DownloadPsychtoolbox('/(適切なパス)/MATLAB/R2022a/toolbox')
 ターミナルよりMATLABをコマンドラインモードで起動する。
 
 ~~~
+# ターミナルで
 matlab -nojvm 
 ~~~
 
-MATLABで以下のコマンドを一度だけ実行する。
+MATLABのコマンドウィンドウで以下のコマンドを一度だけ実行する。
 
 ~~~
+# MATLABコマンドウィンドウで
 PsychLinuxConfiguration
 ~~~
 
@@ -144,9 +158,10 @@ PsychLinuxConfiguration
 - エラーメッセージを真面目に読む
 - エラーメッセージで指摘されている問題を解決する
 
-問題を解決したら、sudo権限でMATLABを起動して、以下のようにPTBのディレクトリに移動して`SetupPsychtoolbox`を実行する。
+エラーの原因を解決したら、sudo権限でMATLABを起動して、MATLABコマンドウィンドウで以下のようにPTBのディレクトリに移動して`SetupPsychtoolbox`を実行する。
 
 ~~~
+# MATLABコマンドウィンドウで
 cd([matlabroot '/toolbox/Psychtoolbox'])
 SetupPsychtoolbox
 ~~~
@@ -158,7 +173,8 @@ SetupPsychtoolbox
 MATLABで以下のコマンドを実行してみて、動作したらインストール成功！
 
 ~~~
-# はじめて動かすと楽しいデモ
+# MATLABコマンドウィンドウで
+# 以下、はじめて動かすと楽しいデモ
 LinesDemo
 DrawFormattedTextDemo
 KbDemo
