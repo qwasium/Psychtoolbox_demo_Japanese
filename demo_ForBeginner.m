@@ -210,7 +210,7 @@
 
 
 clear all
-% ワークスペースに残っている変数が悪さをしないようにお守りのclear。
+% メモリに残っている変数が悪さをしないようにお守りのclear。
 % clear allでallをつけているのはコンパイルしたmexファイルもメモリから開放するため。
 
 homeDir = fileparts(mfilename('fullpath'));
