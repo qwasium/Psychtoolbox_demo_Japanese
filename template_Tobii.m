@@ -38,7 +38,7 @@ sca
 PsychDefaultSetup(2);
 
 dummyMode = false;
-% dummyMode = true;
+% dummyMode = true; % for testing
 
 if ~dummyMode
     prompt   = {'ID (year-month-day-number)', 'condition'};

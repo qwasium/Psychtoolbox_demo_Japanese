@@ -7,9 +7,9 @@ Open in Unicode environment if it looks broken.
 ---
 
 このプロジェクトは大学研究室内の教育用資料として公開しているものです。  
-学生個人による非公式な資料であり、正確な情報はMathWorks社およびPsychtoolboxの公式サイトおよびフォーラムを参照してください。また、執筆時点から仕様変更がされている可能性もあるため、迷ったら公式を参照して下さい。
-特に最新情報は公式フォーラムで見られます。
-Gitレポジトリのwikiには公式ドキュメントにまだ記載されていない情報も載っています。ライセンスについても、詳細はGitレポジトリを参照。  
+学生個人による非公式な資料であり、正確な情報はMathWorks社およびPsychtoolboxの公式サイトおよびフォーラムを参照してください。執筆時点から仕様変更がされている可能性もあるため、迷ったら公式を参照して下さい。
+最新情報は公式フォーラムで見られます。
+Gitレポジトリのwikiには公式ドキュメントに記載されていない情報も載っています。ライセンスについても、詳細はGitレポジトリを参照。  
 - [PTB公式ホームページ](http://psychtoolbox.org/)  
 - [PTB公式フォーラム](https://psychtoolbox.discourse.group/)  
 - [Gitレポジトリ](https://github.com/Psychtoolbox-3/Psychtoolbox-3)  
@@ -18,10 +18,10 @@ Gitレポジトリのwikiには公式ドキュメントにまだ記載されて�
 
 ## コンテンツ
 
-- demo_ForBeginner.m：はじめてPTBに触れる人はこれを読むこと。コメントで細かく説明を入れていて、初学者が読むだけで基本を網羅できるようにしている。
+- demo_ForBeginner.m：はじめてPTBに触れる人はこれを読むこと。コメントで細かく説明を入れていて、初学者は読むだけで基本を網羅できるようにしている。
 - demo_StimTracker.m：Cedrus社のStimTrackerを用いた同期を行うためのデモコード。
 - template_Simple.m：簡単な実験プログラムを新規作成する際のひな形。
-- template_Tobii.m：[Titta(Niehorster et al., 2020)](https://github.com/dcnieho/Titta)とTobiiアイトラッカーを用いた実験プログラムを新規作成する際のひな形。
+- template_Tobii.m：[Titta(Niehorster et al., 2020)](https://github.com/dcnieho/Titta)とTobiiアイトラッカーを用いた実験プログラムを新規作成する際のひな形。TittaのライセンスはTittaレポジトリを参照。
 
 ## PTBのインストール
 
@@ -32,7 +32,7 @@ Windows10以降のWindowsは正常に動作しているのか判断すること�
 
 ビギナーは避けるべき環境
 - Windows及びMac
-- 32bit及びARM系
+- 32bit及びARM系CPU
 - ハイブリッドグラフィックスのノートPC
 
 ビギナーに推奨する環境
@@ -58,12 +58,12 @@ PTB3ダウンロードページからNeuroDebianページにいく。今回はMA
 
 ![](img/ndeb_install.png)
 
-選択するとその下にコマンドが出てくるのでターミナルを開いて実行する。
+選択するとコマンドが出てくるのでターミナルを開いてコピペして実行する。
 
 ![](img/add_repo.png)
 
-`sudo apt update`のあとに最後に以下のコマンドを実行する。  
-**重要：選択肢はすべて*YES*を選択すること。**
+以下のように、`sudo apt update`を実行した後にインストールを実行する。  
+**重要：この先出てくる選択肢はすべて*YES*を選択すること。**
 
 ~~~
 # ターミナルで
@@ -71,11 +71,11 @@ sudo apt update
 sudo apt install matlab-psychtoolbox-3
 ~~~
 
-PTBをインストールするMATLABのディレクトリを指定する（画像で入力されているディレクトリはMATLABデフォルトのインストール先が違うので注意）。
+PTBをインストールするMATLABのディレクトリを指定する（画像で入力されているディレクトリはMATLABデフォルトのインストール先とは違うので注意）。
 
 ![](img/matroot.png)
 
-通常はユーザーは空欄でOK。
+通常はユーザー欄は空欄でOK。
 
 ![](img/user.png)
 
@@ -85,7 +85,7 @@ PTBをインストールするMATLABのディレクトリを指定する（画�
 
 これでNeuroDebianは完了。
 
-MATLABをインストールする前に以上のインストールをした場合はMATLABインストール後にターミナルで以下を実行すること。  
+通常、以上の作業はMATLABのインストールが済んだ後に行うが、もし誤ってMATLABをインストールする前に以上の作業を行った場合はMATLABインストール後に、ターミナルで以下を必ず実行すること。  
 ~~~
 # ターミナルで
 sudo dpkg-reconfigure matlab-support
@@ -113,7 +113,7 @@ MATLABクラッシュレポーターのウィンドウを触らなければ、MA
 MATLABを起動したら**Downloadpsychtoolbox.m**のフォルダーに移動して以下を確認する。
 - GPUの正しい端子にディスプレイを接続する
 - ディスプレイを2枚以上接続しない
-- ディスプレイケーブルの変換アダプタを使用しない
+- ディスプレイケーブルの変換アダプタを使用しない（映像通信規格に精通している者は各自判断でOK）
 
 確認できたらMATLABのコマンドウィンドウで`DownloadPsychtoolbox('インストール先のディレクトリ')`を実行する。
 
@@ -124,7 +124,7 @@ MATLABを起動したら**Downloadpsychtoolbox.m**のフォルダーに移動し
 cd /home/(ユーザー名)/Downloads
 
 %　引数はMATLABのtoolboxフォルダーのパス（適切なディレクトリを入れる）
-DownloadPsychtoolbox('/(適切なパス)/MATLAB/R2022a/toolbox')
+DownloadPsychtoolbox([matlabroot '/toolbox'])
 ~~~
 
 インストールが始まったら、出てくる文章を注意深く読みながら、インストーラーの指示に従う。英語が苦手な人は助っ人を用意しておくと良い。

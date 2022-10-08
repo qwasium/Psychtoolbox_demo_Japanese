@@ -210,7 +210,7 @@
 
 
 clear all
-% ワークスペースに残っている変数が悪さをしないようにお守りのclear。
+% メモリに残っている変数が悪さをしないようにお守りのclear。
 % clear allでallをつけているのはコンパイルしたmexファイルもメモリから開放するため。
 
 homeDir = fileparts(mfilename('fullpath'));
@@ -312,6 +312,8 @@ fixT     = 2.0;   % 注視点提示時間
 % 時間に関する変数(time) : xxxT
 % 他にもポインター(ptr)、ウィンドウ(w)、センター(cntr)、注視点(fix)など
 % 複数の単語を繋げる場合は2語目以降は1文字目を大文字にする：fix + tex -> fixTex
+% このような変数命名をlower camel caseと呼ぶ。
+% それに対して、このスクリプト名のようにアンダースコアで繋ぐ場合はsnake caseと呼ぶ。
 
 try
 %% PTBウィンドウを開く 
