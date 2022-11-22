@@ -25,6 +25,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 clear all
+commandwindow
 homeDir = fileparts(mfilename('fullpath'));
 sca
 PsychDefaultSetup(2);

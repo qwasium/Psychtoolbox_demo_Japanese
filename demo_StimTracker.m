@@ -186,6 +186,7 @@
 
 clear all
 clear device
+commandwindow
 homeDir = fileparts(mfilename('fullpath'));
 sca
 PsychDefaultSetup(2);
