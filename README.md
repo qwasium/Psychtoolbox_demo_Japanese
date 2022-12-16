@@ -137,7 +137,7 @@ DownloadPsychtoolbox([matlabroot '/toolbox'])
 
 [http://psychtoolbox.org/linux](http://psychtoolbox.org/linux)
 
-ターミナルよりMATLABをコマンドラインモードで起動する。
+ターミナルよりMATLABをJava仮想マシン無効モードで起動する。
 
 ~~~
 # ターミナルで
@@ -153,7 +153,7 @@ PsychLinuxConfiguration
 
 `DownloadPsychtoolbox`の時と同様に表示される文章を読みながら進めていき、グループにユーザーを追加する時だけ忘れなければOK。
 
-最後に追加で以下のインストールが推奨されている。
+最後に追加でlow latencyのリナックスカーネルのインストールが推奨されている。
 
 ~~~
 # ターミナルで
