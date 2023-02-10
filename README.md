@@ -65,11 +65,11 @@ PTB3ダウンロードページからNeuroDebianページにいく。今回はMA
 以下のように、`sudo apt update`を実行した後にインストールを実行する。  
 **重要：この先出てくる選択肢はすべて*YES*を選択すること。**
 
-~~~
+```bash
 # ターミナルで
 sudo apt update
 sudo apt install matlab-psychtoolbox-3
-~~~
+```
 
 PTBをインストールするMATLABのディレクトリを指定する（画像で入力されているディレクトリはMATLABデフォルトのインストール先とは違うので注意）。
 
@@ -86,10 +86,11 @@ PTBをインストールするMATLABのディレクトリを指定する（画�
 これでNeuroDebianは完了。
 
 通常、以上の作業はMATLABのインストールが済んだ後に行うが、もし誤ってMATLABをインストールする前に以上の作業を行った場合はMATLABインストール後に、ターミナルで以下を必ず実行すること。  
-~~~
+
+```bash
 # ターミナルで
 sudo dpkg-reconfigure matlab-support
-~~~
+```
 
 ### PTB3のインストール
 
@@ -97,10 +98,10 @@ sudo dpkg-reconfigure matlab-support
 
 MATLABをrootで起動する。(シンボリックリンクがある場合はターミナルから以下のコマンドで起動可)
 
-~~~
+```bash
 # ターミナルで
 sudo matlab
-~~~
+```
 
 2022年現在、`sudo matlab`で起動するとクラッシュするバグが報告されている。  [https://jp.mathworks.com/matlabcentral/answers/1619660-matlab-2021b-crashed-when-running-with-sudo-root
 ](https://jp.mathworks.com/matlabcentral/answers/1619660-matlab-2021b-crashed-when-running-with-sudo-root
@@ -117,7 +118,7 @@ MATLABを起動したら**Downloadpsychtoolbox.m**のフォルダーに移動し
 
 確認できたらMATLABのコマンドウィンドウで`DownloadPsychtoolbox('インストール先のディレクトリ')`を実行する。
 
-~~~
+```matlab
 % MATLABコマンドウィンドウで
 
 %　ダウンロードしたフォルダーに移動（適切なディレクトリを入れる）
@@ -125,7 +126,7 @@ cd /home/(ユーザー名)/Downloads
 
 %　引数はMATLABのtoolboxフォルダーのパス（適切なディレクトリを入れる）
 DownloadPsychtoolbox([matlabroot '/toolbox'])
-~~~
+```
 
 インストールが始まったら、出てくる文章を注意深く読みながら、インストーラーの指示に従う。英語が苦手な人は助っ人を用意しておくと良い。
 
@@ -139,26 +140,26 @@ DownloadPsychtoolbox([matlabroot '/toolbox'])
 
 ターミナルよりMATLABをJava仮想マシン無効モードで起動する。
 
-~~~
+```bash
 # ターミナルで
 matlab -nojvm 
-~~~
+```
 
 MATLABのコマンドウィンドウで以下のコマンドを一度だけ実行する。
 
-~~~
+```matlab
 % MATLABコマンドウィンドウで
 PsychLinuxConfiguration
-~~~
+```
 
 `DownloadPsychtoolbox`の時と同様に表示される文章を読みながら進めていき、グループにユーザーを追加する時だけ忘れなければOK。
 
-最後に追加でlow latencyのリナックスカーネルのインストールが推奨されている。
+最後に追加で組み込み向けのlow latencyカーネルのインストールが推奨されている。
 
-~~~
+```bash
 # ターミナルで
 sudo apt-get install linux-lowlatency
-~~~
+```
 
 ### インストールに失敗したら
 
@@ -167,11 +168,11 @@ sudo apt-get install linux-lowlatency
 
 エラーの原因を解決したら、sudo権限でMATLABを起動して、MATLABコマンドウィンドウで以下のようにPTBのディレクトリに移動して`SetupPsychtoolbox`を実行する。
 
-~~~
+```matlab
 % MATLABコマンドウィンドウで
 cd([matlabroot '/toolbox/Psychtoolbox'])
 SetupPsychtoolbox
-~~~
+```
 
 ### インストール完了後
 
@@ -179,11 +180,11 @@ SetupPsychtoolbox
 念のために一度PCを再起動して、MATLABを起動する。  
 MATLABで以下のコマンドを実行してみて、動作したらインストール成功！
 
-~~~
+```matlab
 % MATLABコマンドウィンドウで
 % 以下、はじめて動かすと楽しいデモ
 LinesDemo
 DrawFormattedTextDemo
 KbDemo
 SadowskiDemo
-~~~
+```

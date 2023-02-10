@@ -46,7 +46,7 @@
 % 学習コストは新しくプログラミング言語を習得する場合と同程度である。
 % 速い者で1〜2週間程度、通常は1〜2ヶ月程度の時間を割けば習得可能である。
 % 決して難しいわけではないことは強調するが、プログラミング同様に好き嫌いは分かれるので全
-% 員ができる必要は全く無いと思う。
+% 員ができる必要は無いと思う。
 % 
 % 結論として、
 % ・学習コストを割けない人はわかる人に丸投げせよ
@@ -114,13 +114,12 @@
 % https://ftdichip.com/drivers/vcp-drivers/
 % そもそもPTBをWindows上で使用すべきではない。
 % 
-% USB経由のStimTrackerの制御は シリアル通信でASCII文字列をリトルエンディアンでPCから
-% StimTrackerに送信することで制御している。
-% 一般的なシリアル制御の機械（身近な例だとETG-4000）と同様、単純なバイト列の通信とする
-% ことで言語や環境に依存せずに制御が可能である。
-% ここで言うシリアルポートとはRS-232Cに限定したものではなく、USBも含めたシリアル通信の
-% ポート全般を指している。
-% 知識が曖昧な人はシリアル通信とパラレル通信の違いを復習すると良い。
+% StimTrackerはUSBをシリアルポートとして通信することで制御できる。 
+% シリアルポートは単純な文字列を送るだけの旧式の通信方式で産業用の機械の制御や設定に今も
+% 広く用いられている（うちのラボで身近な例だとETG-4000）。
+% 初めて聞く人はRS-232Cについて軽くググっておくこと。
+% StimTrackerの場合はPCからStimTrackerにUSB経由でASCII文字列をリトルエンディアンで
+% 送信することで制御する。
 % MATLABの場合はserialport関数を用いて制御する。(serial関数は廃止予定なので使用禁止)
 % help serialport
 % https://www.mathworks.com/help/matlab/serial-port-devices.html
@@ -190,7 +189,7 @@ commandwindow
 homeDir = fileparts(mfilename('fullpath'));
 sca
 PsychDefaultSetup(2);
-% Screen('Preference', 'SyncTestSettings', 0.002); %when noisy
+% Screen('Preference', 'SyncTestSettings', 0.002); %only when noisy
 
 
 %% detect StimTracker and open serial port %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
