@@ -13,7 +13,7 @@
 % v1.0 日付、開発者、変更内容
 % -------------------------------------------------------------------------
 % 
-% なにもわからない人はPTB_Beginner.mを見よ。
+% なにもわからない人はdemo_ForBeginner.mを見よ。
 % 
 % 初めて見る人がわかるように基本情報を記述。
 % ・研究テーマは？
@@ -29,6 +29,7 @@ commandwindow
 homeDir = fileparts(mfilename('fullpath'));
 sca
 PsychDefaultSetup(2);
+GetSecs(0);
 % Screen('Preference', 'SyncTestSettings', 0.002); %システムノイズが多くてSyncErrorが頻発する場合
 
 
@@ -45,6 +46,12 @@ fixClr   = whClr;
 % swchT    = 0.5;
 % fixT     = 2.0;
 
+% text
+Screen('Preference', 'TextRenderer', 1);
+Screen('Preference', 'TextAntiAliasing', 1);
+Screen('Preference', 'TextAlphaBlending', 0);
+Screen('Preference', 'DefaultTextYPositionIsBaseline', 1);
+
 % fixation cross
 fixMat = [0,1,0; 1,1,1; 0,1,0]*fixClr + [1,0,1; 0,0,0; 1,0,1]*bgClr;                            
 fixSz  = 15;
@@ -59,6 +66,11 @@ try
     hz = Screen('NominalFrameRate', wptr, 1);
     Screen('BlendFunction', wptr, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     [xCntr, yCntr] = RectCenter(wRect);
+
+    % auto-select font for Japanese
+    if Screen('Preference', 'TextRenderer') == 1
+        Screen('TextFont', wptr, '-:lang=ja');
+    end
     
     % fixation cross
     fixPos = [xCntr-fixSz, yCntr-fixSz, xCntr+fixSz, yCntr+fixSz];
