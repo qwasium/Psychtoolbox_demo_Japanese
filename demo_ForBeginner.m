@@ -11,7 +11,7 @@
 % 
 % Demo code for first-time learners of PsychToolbox.
 % Comments are in Japanese.
-% Open in Japanese language enabled environment.
+% Open in Japanese language enabled environment if broken.
 % 
 %
 %
@@ -217,8 +217,12 @@ clear all
 % clear allでallをつけているのはコンパイルしたmexファイルもメモリから開放するため。
 
 commandwindow
-% コマンドウィンドウの選択。
+% GUIでコマンドウィンドウの選択。
 % 特にキー入力を伴う処理を扱う場合は入れておくと良い。
+
+GetSecs(0);
+% このmex関数は冒頭で一度呼んでコンパイルしておく癖をつけておくこと。
+% 詳細は後述。419行目〜の"flip"の説明を参照。
 
 homeDir = fileparts(mfilename('fullpath'));
 % 今回は使わないが、別フォルダーに保存されている刺激の素材の読み込みや別フォルダーに結果
@@ -318,7 +322,9 @@ fixT     = 2.0;   % 注視点提示時間
 % 色に関するもの(Color)  : xxxClr
 % 時間に関する変数(time) : xxxT
 % 他にもポインター(ptr)、ウィンドウ(w)、センター(cntr)、注視点(fix)など
-% 明確な目的が無ければ変数命名はcamelCaseまたはsnake_caseに統一することを推奨する。
+% 明確な目的が無ければ変数命名はcamelCaseまたはsnake_caseのどちらかに統一することを推奨する。
+% "bgClr"と"bg_clr"みたいな紛らわしい変数名の乱立をさけるためにもコーディング規約が存在しない
+% 場合も自分なりのルールを決めること。
 
 try
 %% PTBウィンドウを開く 
@@ -327,6 +333,8 @@ try
 % 制終了しないといけない場面が多々ある。そこでPTBのウィンドウに関連する処理を
 % try~catch文の中に入れることによってエラーが発生したらそのままフリーズせずに自動的に
 % 処理を強制終了するようにできる。
+% 基本的な考え方として、PTBでウィンドウを開かなくても実行可能な処理（パラメータ設定など）
+% は開く前に全て済ませておいた方がトラブル対処が楽である。
 
 
     %% open window %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -493,10 +501,10 @@ try
 
     % 注視点(クロス)を表示する
     Screen('FillRect', wptr, bgClr);
-    % まず、注視点(クロス)の画像と大きさ、位置を定義する。
-    fixMat = [0,1,0; 1,1,1; 0,1,0]*stmClr + [1,0,1; 0,0,0; 1,0,1]*bgClr;         % 画像を行列で定義                              
-    fixSz  = 15;                                                   % 描画する大きさ/2 (fixPos↓を見よ)
-    fixPos = [xCntr-fixSz, yCntr-fixSz, xCntr+fixSz, yCntr+fixSz]; % 位置(四隅の座標)
+    % まず、注視点(クロス)の画像(＝行列)と大きさ、位置を定義する。
+    fixMat = [0,1,0; 1,1,1; 0,1,0]*stmClr + [1,0,1; 0,0,0; 1,0,1]*bgClr; % 画像を行列で定義                              
+    fixSz  = 15;                                                         % 描画する大きさ/2 (fixPos↓を見よ)
+    fixPos = [xCntr-fixSz, yCntr-fixSz, xCntr+fixSz, yCntr+fixSz];       % 位置(四隅の座標)
     % これらのパラメーターはコード内のバラバラな場所に定義すると人間が読みにくいので普通
     % は冒頭の方に他のパラメーター一覧と一緒にまとめて定義することが多い。
     % 今回はわかりやすさのためにこの位置で定義した。 
@@ -526,7 +534,7 @@ try
     Screen('FillRect', wptr, bgClr);
     trgtText = 'AAA'; % char型でテキストを定義（string不可）
     % テキストはcharまたはunit8またはdouble型のみ可。
-    % 日本語文字は特別な注意が必要、このスクリプトの一番下を参照。
+    % 日本語文字は特別な注意が必要、demo_JapaneseText.mを参照。
     % 上と同様、色んな所でバラバラに定義するとわけがわからなくなるので通常は冒頭の方に
     % 他のパラメーターと一緒に定義する。
     DrawFormattedText(wptr, trgtText, 'center', 'center', stmClr);
@@ -598,24 +606,4 @@ Screen('Preference', 'Verbosity', oldVerbosity);
 % DrawFormattedTextDemo
 % 
 % など、色々あるのでPsychDemosに何があるかを把握しておくこと。
-% 
-% 
-%% 【重要】日本語テキスト %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 
-% 日本語テキストを含めたUnicode文字を表示させる方法についてデモが用意されている。
-% 日本国内の実験ではほぼ確実に使うので以下のデモスクリプトには必ず目を通しておくこと！
-% 
-% DrawHighQualityUnicodeTextDemo
-% 
-% フォントを特に設定をしなかった場合、もしデフォルトのフォントが日本語非対応だと表示でき
-% なかったりするので注意すること。
-% OS独自のフォントを使用しているなど環境に依存する場合はコメントに明記すること。
-% 
-% 日本語表示をする際はOSの言語設定を日本語にしておくと、double型のまま日本語文字列を直
-% 接突っ込んでも動作する。
-% また、Windows日本語設定ではエンコードをShift-JIS指定にするとcharで突っ込むことも可。
-% Screen('Preference', 'TextEncodingLocale', 'Shift-JIS'); 
-% 
-% 慣れないビギナーはOSを日本語設定にしておく方が簡単かもしれない。
-% ただし、その場合はOSの言語設定に依存するため冒頭コメントに必ず明記すること！
-% 
+%  

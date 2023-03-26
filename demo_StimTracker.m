@@ -188,6 +188,7 @@ clear device
 commandwindow
 homeDir = fileparts(mfilename('fullpath'));
 sca
+GetSecs(0);
 PsychDefaultSetup(2);
 % Screen('Preference', 'SyncTestSettings', 0.002); %only when noisy
 
@@ -196,7 +197,7 @@ PsychDefaultSetup(2);
 % まず、シリアルポートを検索してStimTrackerを特定し、初期設定をする。
 
 % parameters
-device_found = 0;
+deviceFound = 0;
 ports = serialportlist("available");
 
 % search serial ports
@@ -211,7 +212,7 @@ for p = 1:length(ports)
     % 入出力バッファのクリア
     
     write(device,"_c1","char")
-    query_return = read(device,5,"char");
+    queryReturn = read(device,5,"char");
     % 文字列"_c1"をchar型でシリアルポートのデバイスに送信すると、Cedrusのデバイスは
     % "_xid0"などの文字列で応答する。
     % この応答の文字列は
@@ -221,14 +222,14 @@ for p = 1:length(ports)
     % となるが、他のCedrus製品を使用する場合は適切に設定する必要があるので注意。 
     
     % Cedrus device detected
-    if ~isempty(query_return) && query_return == "_xid0"
-        device_found = 1;
+    if ~isempty(queryReturn) && queryReturn == "_xid0"
+        deviceFound = 1;
         break
     end
 end
 
 % Cedrus devices undetected
-if device_found == 0
+if deviceFound == 0
     disp("No XID device found. Exiting.")
     return % exit script
 end
@@ -274,18 +275,17 @@ write(device, [0x6D, 0x70, 0xE8, 0x03, 0x00, 0x00], "uint8");
 % 上の"mp"コマンドで指定した持続時間のTTLパルスを送信できる。
 % 例えば、チャンネル1,2,3(USB0,1,2)のみ送信する場合は以下のようになる。
 %
-% 【注意】チャンネルのビット順は逆になるのでch8,ch7,...,ch2,ch1の順番で2進数で表記する。
+% 【注意】チャンネルのビット順は逆順で2進数で表記する：ch8,ch7,...,ch2,ch1,0,0,0,0,0,0,0,0
 % 
-%  m    h     0b00000111
-% 0x6D 0x68   0x07 0x00     <- hex
-% 109  104     7    0       <- ASCII
 % 
-% write(device, [0x6D, 0x68, 0xE0, 0x00], "uint8"); %input by hex
-%  または
-% write(device,sprintf("mh%c%c", 7, 0), "char"); %input by ASCII
+%  m    h    0b00000111 0b00000000
+% 0x6D 0x68     0x07       0x00     <- hex
+% 109  104       7          0       <- ASCII
 % 
-% 末尾のコメントにチャンネルのビット指定の例をいくつか載せているので参考に。
-% 
+% write(device, [0x6D, 0x68, 0xE0, 0x00], "uint8");    % input by hex
+% write(device, [0x6d, 0x68, 0b00000111, 0], "uint8"); % input by hex & binary
+% write(device, sprintf("mh%c%c", 7, 0), "char");      % input by ASCII
+
 % 初期設定時に全てのチャンネルをLoに落としておくと癖をつけておくと良い
 write(device, [0x6D, 0x68, 0x00, 0x00], "uint8"); % lower all lines
 
@@ -337,7 +337,7 @@ try
     Screen('gluDisk', wptr, bkClr, litSenX, litSenY, litDiam); %light sensor(ch8) Lo
     % ライトセンサー直下は全てのフレームで黒または白を描画すること。冒頭で定義したパラメーターでgluDiskを使用すると調整も簡単。
     flipT = Screen('Flip', wptr);
-    write(device,sprintf("mh%c%c", 1, 0), "char"); %USB0(ch1)
+    write(device, [0x6d, 0x68, 0b00000001, 0], "uint8"); %USB0(ch1)
     
     for i = 1:3
     
@@ -350,7 +350,7 @@ try
         Screen('gluDisk', wptr, whClr, litSenX, litSenY, litDiam); %light sensor(ch8) Hi
         DrawFormattedText(wptr, stimTxt, 'center', 'center', stimClr); %visual stimulus
         flipT = Screen('Flip', wptr, flipT+fixT-0.5/hz);
-        write(device,sprintf("mh%c%c", 2, 0), "char"); %USB1(ch2)
+        write(device, [0x6d, 0x68, 0b00000010, 0], "uint8"); %USB1(ch2)
 
         % litT < stimT の場合は、litT秒後にライトセンサーの出力だけを落として、それ以外は全く同じ刺激を提示する
         Screen('gluDisk', wptr, bkClr, litSenX, litSenY, litDiam); %light sensor(ch8) Lo
@@ -362,8 +362,8 @@ try
         flipT = Screen('Flip', wptr, flipT+stimT-0.5/hz);
     
     end
-    write(device,sprintf("mh%c%c", 4, 0), "char"); %USB2(ch3)
-    WaitSecs(2); % 初回呼び出しは時間精度低い
+    write(device, [0x6d, 0x68, 0b00000100, 0], "uint8"); %USB2(ch3)
+    WaitSecs(2); % WaitSecsを使うときは冒頭でGetSecsを一度呼んでおくこと
     sca
 
 catch me    
@@ -391,26 +391,6 @@ function setPulseDuration(device, duration)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 【参考】チャンネルの指定は2進数で考える
-% 
-% 上述の通り、チャンネルは2進数でch8,ch7,...,ch2,ch1の順番で指定する。
-% 
-% 【例】
-% USB0 (ch.1)のみ
-% 0b000000001
-% 0x01 0x00    <- hex
-%  1    0      <- ASCII
-% 
-% USB1 (ch.2)のみ
-% 0b00000010
-% 0x02 0x00    <- hex
-%  2    0      <- ASCII
-% 
-% USB1 (ch.2) && USB2 (ch.3) 
-% 0b00000110
-% 0x06 0x00    <- hex
-%  6    0      <- ASCII
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 【参考】"mx"コマンドでUSB経由で任意のTTL出力をする方法
 % 

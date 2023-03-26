@@ -2,7 +2,7 @@
 
 This is an unofficial Japanese tutorial for Psychtoolbox3. 
 This project is written in Japanese.
-Open in Unicode environment if it looks broken.
+Open in SHIFT-JIS environment if it looks broken.
 
 ---
 
@@ -61,7 +61,7 @@ MATLABまたはOctaveから適切な方を選択。今回はMATLABの方(下)を
 
 ![](img/ndeb_pack.png)
 
-自分の環境を選択して、現在地から地理的に近いサーバーを選択。*all software*を選択。(*only ...*の選択肢は自由ソフトウェア運動の精神に反するソフトウェアを排除)
+自分の環境を選択して、現在地から地理的に近いサーバーを選択。*all software*を選択。( *only ...* の選択肢は自由ソフトウェア運動の精神に反するソフトウェアを排除)
 
 ![](img/ndeb_install.png)
 
