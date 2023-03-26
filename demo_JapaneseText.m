@@ -196,7 +196,6 @@ try
 
     Screen('FillRect', wptr, bgClr);
     flipT = Screen('Flip', wptr, flipT+swchT-0.5/hz);
-    japFnt = Screen('TextFont', wptr);
     sca
 catch me    
     sca
