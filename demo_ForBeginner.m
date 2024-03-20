@@ -212,7 +212,7 @@
 
 
 
-clear all
+clear all %#ok<CLALL> 
 % メモリに残っている変数が悪さをしないようにお守りのclear。
 % clear allでallをつけているのはコンパイルしたmexファイルもメモリから開放するため。
 

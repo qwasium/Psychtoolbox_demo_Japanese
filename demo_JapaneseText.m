@@ -14,7 +14,7 @@
 % Open in Japanese language enabled environment if broken.
 % 
 % PTBの基礎知識を有している読者を前提に書かれている。
-% なにもわからない人はまずPTB_Beginner.mを見よ。
+% なにもわからない人はまずdemo_ForBeginner.mを見よ。
 %
 % 
 %% 日本語文字列表示の概要
@@ -41,7 +41,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-clear all
+clear all %#ok<CLALL> 
 commandwindow
 homeDir = fileparts(mfilename('fullpath'));
 sca

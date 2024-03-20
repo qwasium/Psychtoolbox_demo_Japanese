@@ -183,7 +183,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-clear all
+clear all %#ok<CLALL> 
 clear device
 commandwindow
 homeDir = fileparts(mfilename('fullpath'));
@@ -198,12 +198,13 @@ PsychDefaultSetup(2);
 
 % parameters
 deviceFound = 0;
-ports = serialportlist("available");
+boudRate    = 115200;
+ports       = serialportlist("available");
 
 % search serial ports
 for p = 1:length(ports)
 
-    device = serialport(ports(p),115200,"Timeout",1);
+    device = serialport(ports(p), boudRate, "Timeout",1);
     % シリアルポートオブジェクトを作成。
     % Cedrusのボーレートのデフォルト値は115k。
     % ボーレートの異なる複数機器を組み合わせる場合はこのコードを見直すこと。
